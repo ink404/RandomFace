@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ink.sprite</title>
+<style>
+canvas
+{
+    border:1px solid black;
+    background: url("img/tshirt.png");
+    background: -webkit-linear-gradient(top, #f2ece8 0%,#54a6e5 100%);
+}
+</style>
+
+</head>
+<body>
+<canvas id="myCanvas">
+</canvas>
+<img id="eyes" src="img/eyes.png" style="display:none">
+<img id="nose" src="img/noses.png" style="display:none">
+<img id="mouth" src="img/mouths.png" style="display:none">
+<audio id="doot" autoplay loop>
+  <source src="doot.mp3" type="audio/mpeg">
+</audio>
+</body>
+<script>
+// Declare variables
+var bgrnd = 'img/bgrnd.png'
+var canvas;
+var ctx;
+var i = 0;
+var j = 0;
+var k = 0;
+
+// The draw function *** notice it's a recursive loop ***
+function draw() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    ctx.canvas.width = width
+    ctx.canvas.height = height;
+
+    ctx.fillStyle = 'blue';
+    // ctx.fillRect(0,0,width,height);
+    var sprite1 = document.getElementById('eyes');
+    var sprite2 = document.getElementById('nose');
+    var sprite3 = document.getElementById('mouth');
+    ctx.drawImage(sprite1,i*250,0,500,150,width/2-200,height/2-450,500,150);
+    ctx.drawImage(sprite2,j*500,0,500,500,width/2+50-200,height/2-330,400,400);
+    ctx.drawImage(sprite3,k*500,0,500,300,width/2-200,height/2+80,500,300);
+    // Here is the recursive loop!!!
+    requestAnimationFrame(draw);
+    }
+
+// Update function to move from frame to frame
+function update() {
+    // i = (i+1)%5;
+    i = Math.floor((Math.random()*9));
+    j = Math.floor((Math.random()*5));
+    k = Math.floor((Math.random()*5));
+    }
+
+function init() {
+    canvas = document.getElementById('myCanvas');
+    ctx = canvas.getContext('2d');
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+    canvas.style.background = 'url('+bgrnd+') center center / cover no-repeat';
+    window.setInterval(update,200);
+    requestAnimationFrame(draw);
+    }
+
+window.onload = init;
+</script>
+</html>
